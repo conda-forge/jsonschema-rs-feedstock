@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: 0.30.0
+  version: "0.31.0"
   maturin_version: ">=1.0,<2.0"
 
 package:
@@ -11,10 +11,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/j/jsonschema-rs/jsonschema_rs-${{ version }}.tar.gz
-  sha256: 29f988d229371d6aefd560c5b13e71bf1c91c972a0d83a66c5eb941ce47d3193
+  sha256: 77aeca1dcdb66b78ad96c5cc5b8c73204b642a8e70556b7f0c4f389063b6c4a0
 
 build:
-  number: 2
+  number: 0
   script:
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
