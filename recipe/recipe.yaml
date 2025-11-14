@@ -29,10 +29,10 @@ requirements:
       then:
         - python
         - cross-python_${{ target_platform }}
-        - maturin >=${{ maturin_min }}<${{ maturin_max }}
+        - maturin >=${{ maturin_min }},<${{ maturin_max }}
   host:
     - python
-    - maturin >=${{ maturin_min }}<${{ maturin_max }}
+    - maturin >=${{ maturin_min }},<${{ maturin_max }}
     - pip
   run:
     - python
