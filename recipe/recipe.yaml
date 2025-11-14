@@ -3,7 +3,8 @@ schema_version: 1
 
 context:
   version: "0.34.0"
-  maturin_version: ">=1.0,<2.0"
+  maturin_min: "1.0"
+  maturin_max: "2.0"
 
 package:
   name: jsonschema-rs
@@ -28,10 +29,10 @@ requirements:
       then:
         - python
         - cross-python_${{ target_platform }}
-        - maturin ${{ maturin_version }}
+        - maturin >=${{ maturin_min }}<${{ maturin_max }}
   host:
     - python
-    - maturin ${{ maturin_version }}
+    - maturin >=${{ maturin_min }}<${{ maturin_max }}
     - pip
   run:
     - python
