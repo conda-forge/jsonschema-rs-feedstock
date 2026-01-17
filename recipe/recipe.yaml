@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.38.1"
+  version: "0.39.0"
   maturin_min: "1.0"
   maturin_max: "2.0"
   python_check_max: "3.14"
@@ -13,7 +13,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/j/jsonschema-rs/jsonschema_rs-${{ version }}.tar.gz
-  sha256: ce46c9e43827b409ebaad865a023c03e8684c77fa173c04089cb6d8105ca1bdc
+  sha256: 2beed06b2645e4ee9c3ba7e5db70a76028ba8c9978a654b0765e678e2d6c6df3
 
 build:
   number: 0
