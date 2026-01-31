@@ -23,3 +23,4 @@ target_platform:
 zip_keys:
 - - python
   - is_python_min
+  - is_abi3
