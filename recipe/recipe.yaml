@@ -8,10 +8,11 @@ context:
   python_check_max: "3.14"
   abi3_ext: ${{ "pyd" if win else "abi3.so" }}
   unix_sp_dir: |-
-    $(python -c "print(__import__('site').getsitepackages()[-1])")/
+    $(python -c "print(__import__('site').getsitepackages()[-1])")/jsonschema_rs
   win_sp_dir: |-
-    %PREFIX%\Lib\site-packages\
-  sp_dir: ${{ win_sp_dir if win else unix_sp_dir }}
+    Lib\site-packages\jsonschema_rs
+  sp_dir: |-
+    ${{ "%PREFIX%\\" ~ win_sp_dir if win else unix_sp_dir }}
 
 package:
   name: jsonschema-rs
@@ -81,8 +82,8 @@ tests:
       - pytest -vv --tb=long --color=yes crates/jsonschema-py -k "not readme"
       - if: is_abi3
         then:
-          - cd ${{ sp_dir }}jsonschema_rs
-          - abi3audit -s -v --python --assume-minimum-abi3 ${{ python_min }} *.${{ abi3_ext }}
+          - cd ${{ sp_dir }}
+          - abi3audit -s -v --assume-minimum-abi3 ${{ python_min }} *.${{ abi3_ext }}
 
 about:
   summary: A high-performance JSON Schema validator for Python
