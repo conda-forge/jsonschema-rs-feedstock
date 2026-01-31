@@ -47,6 +47,18 @@ description = "Build jsonschema-rs-feedstock with variant linux_aarch64_is_abi3t
 [tasks."inspect-linux_aarch64_is_abi3trueis_python_mintruepython3.10.____cpython"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_aarch64_is_abi3trueis_python_mintruepython3.10.____cpython.yaml"
 description = "List contents of jsonschema-rs-feedstock packages built for variant linux_aarch64_is_abi3trueis_python_mintruepython3.10.____cpython"
+[tasks."build-linux_ppc64le_is_abi3falseis_python_minfalsepython3.14.____cp314t"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_ppc64le_is_abi3falseis_python_minfalsepython3.14.____cp314t.yaml"
+description = "Build jsonschema-rs-feedstock with variant linux_ppc64le_is_abi3falseis_python_minfalsepython3.14.____cp314t directly (without setup scripts)"
+[tasks."inspect-linux_ppc64le_is_abi3falseis_python_minfalsepython3.14.____cp314t"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_is_abi3falseis_python_minfalsepython3.14.____cp314t.yaml"
+description = "List contents of jsonschema-rs-feedstock packages built for variant linux_ppc64le_is_abi3falseis_python_minfalsepython3.14.____cp314t"
+[tasks."build-linux_ppc64le_is_abi3trueis_python_mintruepython3.10.____cpython"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_ppc64le_is_abi3trueis_python_mintruepython3.10.____cpython.yaml"
+description = "Build jsonschema-rs-feedstock with variant linux_ppc64le_is_abi3trueis_python_mintruepython3.10.____cpython directly (without setup scripts)"
+[tasks."inspect-linux_ppc64le_is_abi3trueis_python_mintruepython3.10.____cpython"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_is_abi3trueis_python_mintruepython3.10.____cpython.yaml"
+description = "List contents of jsonschema-rs-feedstock packages built for variant linux_ppc64le_is_abi3trueis_python_mintruepython3.10.____cpython"
 [tasks."build-osx_64_is_abi3falseis_python_minfalsepython3.14.____cp314t"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_is_abi3falseis_python_minfalsepython3.14.____cp314t.yaml"
 description = "Build jsonschema-rs-feedstock with variant osx_64_is_abi3falseis_python_minfalsepython3.14.____cp314t directly (without setup scripts)"

@@ -7,9 +7,10 @@ context:
   maturin_max: "2.0"
   python_check_max: "3.14"
   abi3_ext: ${{ "pyd" if win else "abi3.so" }}
-  unix_sp_dir: |
+  unix_sp_dir: |-
     $(python -c "print(__import__('site').getsitepackages()[-1])")/
-  win_sp_dir: '%PREFIX%/Lib/site-packages/'
+  win_sp_dir: |-
+    %PREFIX%\Lib\site-packages\
   sp_dir: ${{ win_sp_dir if win else unix_sp_dir }}
 
 package:
