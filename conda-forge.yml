@@ -2,13 +2,17 @@ bot:
   inspection: hint-grayskull
 build_platform:
   linux_aarch64: linux_64
-  # fails with: unknown relocation (31) against symbol aws_lc_0_36_0_OPENSSL_realloc
+  # failing as of https://github.com/conda-forge/jsonschema-rs-feedstock/pull/22
+  #
+  #   unknown relocation (31) against symbol __stack_chk_fail
+  #
   # linux_ppc64le: linux_64
   osx_arm64: osx_64
 conda_build:
   error_overlinking: true
 conda_build_tool: rattler-build
 conda_forge_output_validation: true
+conda_install_tool: pixi
 github:
   branch_name: main
   tooling_branch_name: main
