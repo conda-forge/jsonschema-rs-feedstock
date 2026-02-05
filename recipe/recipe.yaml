@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.40.4"
+  version: "0.41.0"
   maturin_min: "1.0"
   maturin_max: "2.0"
   python_check_max: "3.14"
@@ -20,7 +20,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/j/jsonschema-rs/jsonschema_rs-${{ version }}.tar.gz
-  sha256: 5df98ebea2f853b09ef018aee81b01e73525fd78455cb2a8d1e65961cecd8229
+  sha256: 8f58b5208f368b8abe39191030f33af0309a084469a06bc8a399f83120613ce3
 
 build:
   number: 0
@@ -43,7 +43,7 @@ requirements:
         - python
         - if: is_abi3
           then:
-          - python-abi3
+            - python-abi3
   host:
     - maturin >=${{ maturin_min }},<${{ maturin_max }}
     - pip
