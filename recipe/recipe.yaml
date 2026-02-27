@@ -53,6 +53,11 @@ requirements:
         - python-abi3
   run:
     - python
+  ignore_run_exports:
+    by_name:
+      - if: is_abi3
+        then:
+          - python_abi
 
 tests:
   - if: is_abi3
