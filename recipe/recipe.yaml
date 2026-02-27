@@ -58,6 +58,10 @@ requirements:
       - if: is_abi3
         then:
           - python_abi
+    from_package:
+      - if: build_platform != target_platform
+        then:
+          - cross-python_${{ target_platform }}
 
 tests:
   - if: is_abi3
