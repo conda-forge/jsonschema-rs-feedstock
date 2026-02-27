@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.42.1"
+  version: "0.42.2"
   maturin_min: "1.0"
   maturin_max: "2.0"
   python_check_max: "3.14"
@@ -20,7 +20,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/j/jsonschema-rs/jsonschema_rs-${{ version }}.tar.gz
-  sha256: 4144cd351d39ce457f2c7d45111e7225eb5ed1791e0226dec5b9099d78651e32
+  sha256: 8029431510d0c2c20084f92ee797c41a4a5751a29cb0b102466ada09c328c708
 
 build:
   number: 0
@@ -53,6 +53,15 @@ requirements:
         - python-abi3
   run:
     - python
+  ignore_run_exports:
+    by_name:
+      - if: is_abi3
+        then:
+          - python_abi
+    from_package:
+      - if: build_platform != target_platform
+        then:
+          - cross-python_${{ target_platform }}
 
 tests:
   - if: is_abi3
