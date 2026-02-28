@@ -91,7 +91,7 @@ tests:
           then:
             - abi3audit
     script:
-      - python -c "from pathlib import Path; [Path(p).unlink() for p in '${{ unlink_tests}}'.split()]"
+      - python -c "from pathlib import Path; [Path(p).unlink() for p in '${{ unlink_tests }}'.split()]"
       - pytest -vv --tb=long --color=yes crates/jsonschema-py -k "not readme"
       - if: is_abi3
         then:
