@@ -13,6 +13,9 @@ context:
     Lib\site-packages\jsonschema_rs
   sp_dir: |-
     ${{ "%PREFIX%\\" ~ win_sp_dir if win else unix_sp_dir }}
+  # test_annotation_suite.py: needs fixtures from `jsonschema` submodule (#28)
+  unlink_tests: |-
+    crates/jsonschema-py/tests-py/test_annotation_suite.py
 
 package:
   name: jsonschema-rs
@@ -88,8 +91,7 @@ tests:
           then:
             - abi3audit
     script:
-      # fails pytest discovery; needs submoduled fixtures
-      - ${{ "rm" if unix else "del" }} crates/jsonschema-py/tests-py/test_annotation_suite.py
+      - python -c "from pathlib import Path; [Path(p).unlink() for p in '${{ unlink_tests}}'.split()]"
       - pytest -vv --tb=long --color=yes crates/jsonschema-py -k "not readme"
       - if: is_abi3
         then:
