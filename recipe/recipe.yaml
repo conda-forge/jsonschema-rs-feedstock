@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.42.2"
+  version: "0.43.0"
   maturin_min: "1.0"
   maturin_max: "2.0"
   python_check_max: "3.14"
@@ -13,6 +13,9 @@ context:
     Lib\site-packages\jsonschema_rs
   sp_dir: |-
     ${{ "%PREFIX%\\" ~ win_sp_dir if win else unix_sp_dir }}
+  # test_annotation_suite.py: needs fixtures from `jsonschema` submodule (#28)
+  unlink_tests: |-
+    crates/jsonschema-py/tests-py/test_annotation_suite.py
 
 package:
   name: jsonschema-rs
@@ -20,7 +23,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/j/jsonschema-rs/jsonschema_rs-${{ version }}.tar.gz
-  sha256: 8029431510d0c2c20084f92ee797c41a4a5751a29cb0b102466ada09c328c708
+  sha256: 4654885ddbe28864de898491a5435e15f8eeacccd8531e09b369ba8417a509ac
 
 build:
   number: 0
@@ -88,6 +91,7 @@ tests:
           then:
             - abi3audit
     script:
+      - python -c "from pathlib import Path; [Path(p).unlink() for p in '${{ unlink_tests }}'.split()]"
       - pytest -vv --tb=long --color=yes crates/jsonschema-py -k "not readme"
       - if: is_abi3
         then:
