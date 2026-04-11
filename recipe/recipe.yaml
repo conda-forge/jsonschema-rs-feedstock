@@ -29,12 +29,12 @@ build:
   number: 0
   skip: is_abi3 and not is_python_min
   script:
-    env:
-      PYO3_PRINT_CONFIG: "1"
-      MATURIN_PEP517_ARGS: ${{ "--no-default-features" if not is_abi3 }}
-    content:
-      - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
-      - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+    - if: linux and build_platform != target_platform and not is_abi3
+      then:
+        - env | grep PYO3
+        - export PYO3_CROSS_PYTHON_VERSION=$PY_VER
+    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
   python:
     version_independent: ${{ is_abi3 }}
 
