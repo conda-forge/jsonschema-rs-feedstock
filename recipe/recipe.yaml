@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.45.1"
+  version: "0.46.0"
   maturin_min: "1.0"
   maturin_max: "2.0"
   python_check_max: "3.14"
@@ -23,14 +23,14 @@ package:
 
 source:
   url: https://pypi.org/packages/source/j/jsonschema-rs/jsonschema_rs-${{ version }}.tar.gz
-  sha256: 94c725dfc287fd0d3e3c03d5d9556119df227385ba92098057818e5cdc836cd3
+  sha256: 4ad96a7fa583fa63abd78d0fd95ffc662cc8e22b8feb06c629c8c314c5e825a1
 
 build:
   number: 0
   skip: is_abi3 and not is_python_min
   script:
-    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
+    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
   python:
     version_independent: ${{ is_abi3 }}
 
