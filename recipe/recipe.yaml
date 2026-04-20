@@ -39,14 +39,6 @@ requirements:
     - ${{ compiler("rust") }}
     - ${{ stdlib("c") }}
     - cargo-bundle-licenses
-    - if: build_platform != target_platform
-      then:
-        - cross-python_${{ target_platform }}
-        - maturin >=${{ maturin_min }},<${{ maturin_max }}
-        - python
-        - if: is_abi3
-          then:
-            - python-abi3
   host:
     - maturin >=${{ maturin_min }},<${{ maturin_max }}
     - pip
@@ -61,10 +53,6 @@ requirements:
       - if: is_abi3
         then:
           - python_abi
-    from_package:
-      - if: build_platform != target_platform
-        then:
-          - cross-python_${{ target_platform }}
 
 tests:
   - if: is_abi3
