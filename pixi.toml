@@ -5,7 +5,7 @@
 
 [workspace]
 name = "jsonschema-rs-feedstock"
-version = "3.60.0"  # conda-smithy version used to generate this file
+version = "3.61.2"  # conda-smithy version used to generate this file
 description = "Pixi configuration for conda-forge/jsonschema-rs-feedstock"
 authors = ["@conda-forge/jsonschema-rs"]
 channels = ["conda-forge"]
