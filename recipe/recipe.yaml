@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.55.1"
+  version: "0.56.0"
   maturin_min: "1.0"
   maturin_max: "2.0"
   python_check_max: "3.14"
@@ -22,8 +22,8 @@ package:
   version: ${{ version }}
 
 source:
-  url: https://files.pythonhosted.org/packages/1f/17/f38dfffe272365ea4ad8d9aed4b7c54009ad7b8162d1c437638cc881174c/jsonschema_rs-${{ version }}.tar.gz
-  sha256: 49ebcfeaf61765c6716a8611b521846e4c20c744dca6540ba4ea36f87f699927
+  url: https://files.pythonhosted.org/packages/16/b0/fca4c04d71ff6a31062afaa7086be0e1b85646f814a934d2c1624a5e6022/jsonschema_rs-${{ version }}.tar.gz
+  sha256: c51593e1f3ad6e874dadcf54a813292c8ace0101fce25f2e9de60f6c7038c6eb
 
 build:
   number: 0
