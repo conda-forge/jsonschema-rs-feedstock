@@ -47,14 +47,14 @@ requirements:
     - python
     - if: is_abi3
       then:
-        - python-abi3
         - python ${{ python_min }}.*
+        - python-abi3
   run:
     - python
     - if: is_abi3
       then:
-        - python-abi3
         - python >=${{ python_min }}
+        - python-abi3
 
 tests:
   - package_contents:
@@ -65,7 +65,9 @@ tests:
         - jsonschema_rs/**
         - jsonschema_rs-${{ version }}.dist-info/**
   - python:
-      imports: jsonschema_rs
+      imports:
+        - jsonschema_rs
+        - jsonschema_rs.jsonschema_rs
       pip_check: true
       python_version:
         - if: is_abi3
@@ -87,6 +89,9 @@ tests:
             - abi3audit
             - python ${{ python_min }}.*
     script:
+      env:
+        PYTHON_MIN: ${{ python_min }}
+        IS_ABI3: ${{ is_abi3 }}
       file: run_test.py
 
 about:
