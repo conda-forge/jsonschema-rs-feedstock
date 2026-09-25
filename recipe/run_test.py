@@ -5,10 +5,10 @@ import os
 from typing import Any
 import json
 
-PYTHON_MIN = os.environ["PYTHON_MIN"]
+PYTHON_MIN = os.environ["python_min"]
 SRC_DIR = Path(os.environ["SRC_DIR"])
 SP_DIR = Path(os.environ["SP_DIR"])
-IS_ABI3 = json.loads(os.environ["IS_ABI3"])
+IS_ABI3 = json.loads(os.environ["is_abi3"])
 ABI3_EXT = "pyd" if os.name == "nt" else "pyo3.so"
 
 
