@@ -2,71 +2,80 @@
 schema_version: 1
 
 context:
-  version: "0.57.1"
-  maturin_min: "1.0"
-  maturin_max: "2.0"
+  version: "0.58.0"
   python_check_max: "3.14"
-  abi3_ext: ${{ "pyd" if win else "abi3.so" }}
-  unix_sp_dir: |-
-    $(python -c "print(__import__('site').getsitepackages()[-1])")/jsonschema_rs
-  win_sp_dir: |-
-    Lib\site-packages\jsonschema_rs
-  sp_dir: |-
-    ${{ "%PREFIX%\\" ~ win_sp_dir if win else unix_sp_dir }}
-  # test_annotation_suite.py: needs fixtures from `jsonschema` submodule (#28)
-  unlink_tests: |-
-    crates/jsonschema-py/tests-py/test_annotation_suite.py
+  cargo_auditable_wrapper: cargo-auditable-wrapper.${{ "bat" if win else "sh" }}
 
 package:
   name: jsonschema-rs
   version: ${{ version }}
 
 source:
-  url: https://files.pythonhosted.org/packages/b4/d6/e3eaf97f6daf16f006df57736052656ca717a35bb4651548b5c96fe43e5c/jsonschema_rs-${{ version }}.tar.gz
-  sha256: 08ed69730c526544aff246d802373a2abf76082eb1aa7759528d104cad9a883b
+  url: https://files.pythonhosted.org/packages/b0/94/b2b290f3dda177b0074e32c1a495260173e77257dd7163d914254b4061a5/jsonschema_rs-${{ version }}.tar.gz
+  sha256: 45e0d2e07113eb5da922ea9d9a414da511b858a63bf89dba8a14cc958f7981fe
 
 build:
   number: 0
   skip: is_abi3 and not is_python_min
-  script:
-    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
-    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
   python:
     version_independent: ${{ is_abi3 }}
+  script:
+    env:
+      CARGO_PROFILE_RELEASE_LTO: fat
+      CARGO_PROFILE_RELEASE_STRIP: symbols
+      CARGO: ${{ cargo_auditable_wrapper }}
+    content:
+      - if: win
+        then:
+          - copy "%RECIPE_DIR%\${{ cargo_auditable_wrapper }}" "%BUILD_PREFIX%\Library\bin\"
+        else:
+          - cp "${RECIPE_DIR}/${{ cargo_auditable_wrapper }}" "${BUILD_PREFIX}/bin/"
+          - chmod 755 "${BUILD_PREFIX}/bin/${{ cargo_auditable_wrapper }}"
+      - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check --check-build-dependencies
+      - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
 
 requirements:
   build:
+    - ${{ compiler("c") }}
     - ${{ compiler("rust") }}
     - ${{ stdlib("c") }}
+    - cargo-auditable
     - cargo-bundle-licenses
   host:
-    - maturin >=${{ maturin_min }},<${{ maturin_max }}
+    - maturin >=1.0,<2.0
     - pip
     - python
     - if: is_abi3
       then:
+        - python ${{ python_min }}.*
         - python-abi3
   run:
     - python
-  ignore_run_exports:
-    by_name:
-      - if: is_abi3
-        then:
-          - python_abi
+    - if: is_abi3
+      then:
+        - python >=${{ python_min }}
+        - python-abi3
 
 tests:
-  - if: is_abi3
-    then:
-      - python:
-          imports: jsonschema_rs
-          pip_check: true
-          python_version:
+  - package_contents:
+      strict: true
+      files:
+        - etc/conda/test-files/jsonschema-rs/**
+      site_packages:
+        - jsonschema_rs/**
+        - jsonschema_rs-${{ version }}.dist-info/**
+  - python:
+      imports:
+        - jsonschema_rs
+        - jsonschema_rs.jsonschema_rs
+      pip_check: true
+      python_version:
+        - if: is_abi3
+          then:
             - ${{ python_min }}.*
             - ${{ python_check_max }}.*
-    else:
-      - python:
-          imports: jsonschema_rs
-          pip_check: true
+          else:
+            - "*"
   - files:
       source:
         - crates/jsonschema-py/tests-py/
@@ -78,13 +87,12 @@ tests:
         - if: is_abi3
           then:
             - abi3audit
+            - python ${{ python_min }}.*
     script:
-      - python -c "from pathlib import Path; [Path(p).unlink() for p in '${{ unlink_tests }}'.split()]"
-      - pytest -vv --tb=long --color=yes crates/jsonschema-py -k "not readme"
-      - if: is_abi3
-        then:
-          - cd ${{ sp_dir }}
-          - abi3audit -s -v --assume-minimum-abi3 ${{ python_min }} jsonschema_rs.${{ abi3_ext }}
+      env:
+        PYTHON_MIN: ${{ python_min }}
+        IS_ABI3: ${{ is_abi3 }}
+      file: run_test.py
 
 about:
   summary: A high-performance JSON Schema validator for Python
