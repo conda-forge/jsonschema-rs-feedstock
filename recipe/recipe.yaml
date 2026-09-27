@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.58.0"
+  version: "0.58.1"
   python_check_max: "3.14"
   cargo_auditable_wrapper: cargo-auditable-wrapper.${{ "bat" if win else "sh" }}
 
@@ -11,8 +11,8 @@ package:
   version: ${{ version }}
 
 source:
-  url: https://files.pythonhosted.org/packages/b0/94/b2b290f3dda177b0074e32c1a495260173e77257dd7163d914254b4061a5/jsonschema_rs-${{ version }}.tar.gz
-  sha256: 45e0d2e07113eb5da922ea9d9a414da511b858a63bf89dba8a14cc958f7981fe
+  url: https://files.pythonhosted.org/packages/09/ea/89003442dd6cb72706f14985154c12ddf3c14490a6ee1597e6fcb0704e7f/jsonschema_rs-${{ version }}.tar.gz
+  sha256: 63a7f7e0acd5eaa0f2dd074634e3a793b9089ee64da004614378390110f0d8be
 
 build:
   number: 0
