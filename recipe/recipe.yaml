@@ -23,6 +23,7 @@ build:
     env:
       CARGO_PROFILE_RELEASE_LTO: fat
       CARGO_PROFILE_RELEASE_STRIP: symbols
+      AWS_LC_SYS_NO_JITTER_ENTROPY: "1"
       CARGO: ${{ cargo_auditable_wrapper }}
     content:
       - if: win
