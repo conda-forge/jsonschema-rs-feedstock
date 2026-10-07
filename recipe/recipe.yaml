@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.58.5"
+  version: "0.58.6"
   python_check_max: "3.14"
   cargo_auditable_wrapper: cargo-auditable-wrapper.${{ "bat" if win else "sh" }}
 
@@ -11,11 +11,11 @@ package:
   version: ${{ version }}
 
 source:
-  url: https://files.pythonhosted.org/packages/30/01/a2d23d69bda7afec7a56949cc8f86393699334c687dd22496e379809a1c4/jsonschema_rs-${{ version }}.tar.gz
-  sha256: b1f7c65fd467e2fe85ef1c4f824ebf96e4334b035d3c2a12623f7000eb0d9f5a
+  url: https://files.pythonhosted.org/packages/37/2a/e1f8bf7448c1d88c804ff3f52f1f354999f4b401d17d9167386d9abf9bed/jsonschema_rs-${{ version }}.tar.gz
+  sha256: 067140dbbb0e94106212c23ad26c41aff4f5558dbc340b4416b57c1a4f3c537a
 
 build:
-  number: 1
+  number: 0
   skip: is_abi3 and not is_python_min
   python:
     version_independent: ${{ is_abi3 }}
@@ -23,6 +23,7 @@ build:
     env:
       CARGO_PROFILE_RELEASE_LTO: fat
       CARGO_PROFILE_RELEASE_STRIP: symbols
+      AWS_LC_SYS_NO_JITTER_ENTROPY: "1"
       CARGO: ${{ cargo_auditable_wrapper }}
     content:
       - if: win
